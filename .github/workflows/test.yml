@@ -7,7 +7,7 @@ on:
         description: "Node.js version to use"
         required: false
         type: string
-        default: "24"
+        default: "22"
 
 jobs:
   test:
@@ -22,16 +22,16 @@ jobs:
         uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4
 
       - name: "Setup Node.js ${{ inputs.node-version }}"
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6
         with:
           node-version: ${{ inputs.node-version }}
           cache: "pnpm"
 
       - name: "Install Dependencies"
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
       - name: "Type Check"
-        run: pnpm run lint
+        run: pnpm run typecheck
 
       - name: "Run Tests"
-        run: pnpm run test:run
+        run: pnpm run test
