@@ -1,3 +1,19 @@
+# 1.0.0 (2026-01-19)
+
+
+### Bug Fixes
+
+* update readme ([5a5ea1c](https://github.com/raisedadead/outline-wiki-mcp/commit/5a5ea1cfef7203503d35c05e1c7128d764061c90))
+
+
+### Features
+
+* add more tools ([bc01d72](https://github.com/raisedadead/outline-wiki-mcp/commit/bc01d726a32d839958a164b82cd0be10e7aef02a))
+* better docs ([22d87fc](https://github.com/raisedadead/outline-wiki-mcp/commit/22d87fcf13f8da46e467b2321dfcdd455e1d48b4))
+* initial commit - Outline MCP server ([e435343](https://github.com/raisedadead/outline-wiki-mcp/commit/e43534343e65da23b9879730c5e8b965ea05c42e))
+* setup releases ([217e390](https://github.com/raisedadead/outline-wiki-mcp/commit/217e390d6c2ebe3d438d532d22a0b06714f017ab))
+* setup releases ([d73e48b](https://github.com/raisedadead/outline-wiki-mcp/commit/d73e48bee4758680c509ecbe62aea80241573b08))
+
 # Changelog
 
 All notable changes to this project will be documented in this file.

@@ -1,6 +1,6 @@
 {
   "name": "outline-wiki-mcp",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "MCP server for Outline wiki integration",
   "type": "module",
   "main": "dist/index.js",
