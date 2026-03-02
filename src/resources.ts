@@ -1,5 +1,15 @@
-import { McpServer, ResourceTemplate } from '@modelcontextprotocol/sdk/server/mcp.js';
+import {
+  McpServer,
+  ResourceTemplate,
+} from '@modelcontextprotocol/sdk/server/mcp.js';
 import type { OutlineClient } from './outline-client.js';
+
+const PREVIEW_LENGTH = 500;
+
+function truncate(text: string, maxLength: number): string {
+  if (text.length <= maxLength) return text;
+  return text.slice(0, maxLength) + '…';
+}
 
 function extractStringParam(
   params: Record<string, string | string[]>,
@@ -13,7 +23,10 @@ function extractStringParam(
   return result;
 }
 
-export function registerResources(server: McpServer, client: OutlineClient): void {
+export function registerResources(
+  server: McpServer,
+  client: OutlineClient
+): void {
   // Collections list resource
   server.registerResource(
     'collections',
@@ -21,16 +34,16 @@ export function registerResources(server: McpServer, client: OutlineClient): voi
     {
       title: 'All Collections',
       description: 'List of all collections in the Outline workspace',
-      mimeType: 'application/json'
+      mimeType: 'application/json',
     },
     async (uri: URL) => {
       const collections = await client.listCollections();
 
-      const formatted = collections.map((c) => ({
+      const formatted = collections.map(c => ({
         id: c.id,
         name: c.name,
         description: c.description,
-        color: c.color
+        color: c.color,
       }));
 
       return {
@@ -38,9 +51,9 @@ export function registerResources(server: McpServer, client: OutlineClient): voi
           {
             uri: uri.href,
             mimeType: 'application/json',
-            text: JSON.stringify(formatted, null, 2)
-          }
-        ]
+            text: JSON.stringify(formatted, null, 2),
+          },
+        ],
       };
     }
   );
@@ -52,25 +65,25 @@ export function registerResources(server: McpServer, client: OutlineClient): voi
       list: async () => {
         const collections = await client.listCollections();
         return {
-          resources: collections.map((c) => ({
+          resources: collections.map(c => ({
             uri: `outline://collections/${c.id}`,
             name: c.name,
             description: c.description ?? undefined,
-            mimeType: 'application/json'
-          }))
+            mimeType: 'application/json',
+          })),
         };
-      }
+      },
     }),
     {
       title: 'Collection Details',
       description: 'Details and documents for a specific collection',
-      mimeType: 'application/json'
+      mimeType: 'application/json',
     },
     async (uri: URL, params: Record<string, string | string[]>) => {
       const collectionId = extractStringParam(params, 'collectionId');
       const [collection, documents] = await Promise.all([
         client.getCollection(collectionId),
-        client.listDocuments({ collectionId })
+        client.listDocuments({ collectionId }),
       ]);
 
       const formatted = {
@@ -78,11 +91,11 @@ export function registerResources(server: McpServer, client: OutlineClient): voi
         name: collection.name,
         description: collection.description,
         color: collection.color,
-        documents: documents.map((d) => ({
+        documents: documents.map(d => ({
           id: d.id,
           title: d.title,
-          updatedAt: d.updatedAt
-        }))
+          updatedAt: d.updatedAt,
+        })),
       };
 
       return {
@@ -90,9 +103,9 @@ export function registerResources(server: McpServer, client: OutlineClient): voi
           {
             uri: uri.href,
             mimeType: 'application/json',
-            text: JSON.stringify(formatted, null, 2)
-          }
-        ]
+            text: JSON.stringify(formatted, null, 2),
+          },
+        ],
       };
     }
   );
@@ -104,32 +117,44 @@ export function registerResources(server: McpServer, client: OutlineClient): voi
       list: async () => {
         const documents = await client.listDocuments();
         return {
-          resources: documents.map((d) => ({
+          resources: documents.map(d => ({
             uri: `outline://documents/${d.id}`,
             name: d.title,
             description: `Updated: ${d.updatedAt}`,
-            mimeType: 'text/markdown'
-          }))
+            mimeType: 'text/markdown',
+          })),
         };
-      }
+      },
     }),
     {
       title: 'Document Content',
       description: 'Full content of a specific document in markdown',
-      mimeType: 'text/markdown'
+      mimeType: 'text/markdown',
     },
     async (uri: URL, params: Record<string, string | string[]>) => {
       const documentId = extractStringParam(params, 'documentId');
       const doc = await client.getDocument(documentId);
+
+      const summary = [
+        `# ${doc.title}`,
+        '',
+        `**ID:** ${doc.id}`,
+        `**Updated:** ${doc.updatedAt}`,
+        `**Words:** ${doc.text.split(/\s+/).filter(Boolean).length}`,
+        '',
+        '## Preview',
+        '',
+        truncate(doc.text, PREVIEW_LENGTH),
+      ].join('\n');
 
       return {
         contents: [
           {
             uri: uri.href,
             mimeType: 'text/markdown',
-            text: `# ${doc.title}\n\n${doc.text}`
-          }
-        ]
+            text: summary,
+          },
+        ],
       };
     }
   );
