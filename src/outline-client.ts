@@ -12,7 +12,7 @@ import type {
   DocumentMoveParams,
   CollectionCreateParams,
   CollectionUpdateParams,
-  DocumentExport
+  DocumentExport,
 } from './types.js';
 
 const DEFAULT_PAGE_SIZE = 25;
@@ -43,9 +43,9 @@ export class OutlineClient {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${this.apiKey}`
+          Authorization: `Bearer ${this.apiKey}`,
         },
-        body: JSON.stringify(body)
+        body: JSON.stringify(body),
       });
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
@@ -91,14 +91,16 @@ export class OutlineClient {
 
     if (!data.ok) {
       const error = data as OutlineApiError;
-      throw new Error(`Outline API error: ${error.error}${error.message ? ` - ${error.message}` : ''}`);
+      throw new Error(
+        `Outline API error: ${error.error}${error.message ? ` - ${error.message}` : ''}`
+      );
     }
 
     return data as OutlineApiResponse<T>;
   }
 
   private sleep(ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   private async fetchAllPages<T>(
@@ -117,7 +119,7 @@ export class OutlineClient {
       const response = await this.request<T[] | Record<string, T[]>>(endpoint, {
         ...params,
         limit: DEFAULT_PAGE_SIZE,
-        offset
+        offset,
       });
 
       // Handle both array responses and object responses with nested data
@@ -150,41 +152,68 @@ export class OutlineClient {
   // Collection methods
 
   async listCollections(): Promise<OutlineCollection[]> {
-    return this.fetchAllPages<OutlineCollection>('collections.list', {}, 'collections');
+    return this.fetchAllPages<OutlineCollection>(
+      'collections.list',
+      {},
+      'collections'
+    );
   }
 
   async getCollection(id: string): Promise<OutlineCollection> {
-    const response = await this.request<OutlineCollection>('collections.info', { id });
+    const response = await this.request<OutlineCollection>('collections.info', {
+      id,
+    });
     return response.data;
   }
 
   // Document methods
 
-  async listDocuments(params: DocumentListParams = {}): Promise<OutlineDocument[]> {
-    return this.fetchAllPages<OutlineDocument>('documents.list', { ...params }, 'documents');
+  async listDocuments(
+    params: DocumentListParams = {}
+  ): Promise<OutlineDocument[]> {
+    return this.fetchAllPages<OutlineDocument>(
+      'documents.list',
+      { ...params },
+      'documents'
+    );
   }
 
   async getDocument(id: string): Promise<OutlineDocument> {
-    const response = await this.request<OutlineDocument>('documents.info', { id });
+    const response = await this.request<OutlineDocument>('documents.info', {
+      id,
+    });
     return response.data;
   }
 
-  async searchDocuments(params: DocumentSearchParams): Promise<OutlineSearchResult[]> {
-    return this.fetchAllPages<OutlineSearchResult>('documents.search', { ...params }, 'results');
+  async searchDocuments(
+    params: DocumentSearchParams
+  ): Promise<OutlineSearchResult[]> {
+    return this.fetchAllPages<OutlineSearchResult>(
+      'documents.search',
+      { ...params },
+      'results'
+    );
   }
 
   async createDocument(params: DocumentCreateParams): Promise<OutlineDocument> {
-    const response = await this.request<OutlineDocument>('documents.create', { ...params });
+    const response = await this.request<OutlineDocument>('documents.create', {
+      ...params,
+    });
     return response.data;
   }
 
   async updateDocument(params: DocumentUpdateParams): Promise<OutlineDocument> {
-    const response = await this.request<OutlineDocument>('documents.update', { ...params });
+    const response = await this.request<OutlineDocument>('documents.update', {
+      ...params,
+    });
     return response.data;
   }
 
   async moveDocument(params: DocumentMoveParams): Promise<OutlineDocument[]> {
-    const response = await this.request<{ documents: OutlineDocument[] }>('documents.move', { ...params });
+    const response = await this.request<{ documents: OutlineDocument[] }>(
+      'documents.move',
+      { ...params }
+    );
     return response.data.documents;
   }
 
@@ -193,33 +222,54 @@ export class OutlineClient {
   }
 
   async archiveDocument(id: string): Promise<OutlineDocument> {
-    const response = await this.request<OutlineDocument>('documents.archive', { id });
+    const response = await this.request<OutlineDocument>('documents.archive', {
+      id,
+    });
     return response.data;
   }
 
   async unarchiveDocument(id: string): Promise<OutlineDocument> {
-    const response = await this.request<OutlineDocument>('documents.unarchive', { id });
+    const response = await this.request<OutlineDocument>(
+      'documents.unarchive',
+      { id }
+    );
     return response.data;
   }
 
   async listDrafts(): Promise<OutlineDocument[]> {
-    return this.fetchAllPages<OutlineDocument>('documents.drafts', {}, 'documents');
+    return this.fetchAllPages<OutlineDocument>(
+      'documents.drafts',
+      {},
+      'documents'
+    );
   }
 
   async exportDocument(id: string): Promise<string> {
-    const response = await this.request<DocumentExport>('documents.export', { id });
+    const response = await this.request<DocumentExport>('documents.export', {
+      id,
+    });
     return response.data.data;
   }
 
   // Additional collection methods
 
-  async createCollection(params: CollectionCreateParams): Promise<OutlineCollection> {
-    const response = await this.request<OutlineCollection>('collections.create', { ...params });
+  async createCollection(
+    params: CollectionCreateParams
+  ): Promise<OutlineCollection> {
+    const response = await this.request<OutlineCollection>(
+      'collections.create',
+      { ...params }
+    );
     return response.data;
   }
 
-  async updateCollection(params: CollectionUpdateParams): Promise<OutlineCollection> {
-    const response = await this.request<OutlineCollection>('collections.update', { ...params });
+  async updateCollection(
+    params: CollectionUpdateParams
+  ): Promise<OutlineCollection> {
+    const response = await this.request<OutlineCollection>(
+      'collections.update',
+      { ...params }
+    );
     return response.data;
   }
 
