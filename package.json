@@ -36,9 +36,11 @@
     "test": "vitest run",
     "test:watch": "vitest --watch",
     "test:run": "vitest run",
-    "lint": "tsc --noEmit",
+    "lint": "oxlint src/ tests/",
+    "format": "oxfmt --write src/ tests/",
+    "format:check": "oxfmt --check src/ tests/",
     "typecheck": "tsc --noEmit",
-    "check": "pnpm run lint && pnpm run typecheck && pnpm run test",
+    "check": "pnpm run lint && pnpm run format:check && pnpm run typecheck && pnpm run test",
     "release": "semantic-release",
     "prepare": "husky",
     "prepublishOnly": "npm run build"
@@ -70,14 +72,19 @@
     "@types/node": "^22.0.0",
     "husky": "^9.0.0",
     "lint-staged": "^15.0.0",
-    "prettier": "^3.0.0",
+    "oxfmt": "^0.35.0",
+    "oxlint": "^1.50.0",
     "semantic-release": "^25.0.0",
     "typescript": "^5.7.0",
     "vitest": "^2.1.0"
   },
   "lint-staged": {
-    "*.{ts,js,json,md}": [
-      "prettier --write"
+    "*.{ts,js}": [
+      "oxlint",
+      "oxfmt --write"
+    ],
+    "*.{json,md,yaml,yml}": [
+      "oxfmt --write"
     ]
   },
   "packageManager": "pnpm@10.28.0+sha512.05df71d1421f21399e053fde567cea34d446fa02c76571441bfc1c7956e98e363088982d940465fd34480d4d90a0668bc12362f8aa88000a64e83d0b0e47be48"
