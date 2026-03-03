@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/raisedadead/outline-wiki-mcp/compare/v1.2.2...v1.2.3) (2026-03-03)
+
+
+### Bug Fixes
+
+* cleaner error handling and hardening ([#5](https://github.com/raisedadead/outline-wiki-mcp/issues/5)) ([85c77ae](https://github.com/raisedadead/outline-wiki-mcp/commit/85c77aeee4a6696dec860dc741935624ef0160f9))
+
 ## [1.2.2](https://github.com/raisedadead/outline-wiki-mcp/compare/v1.2.1...v1.2.2) (2026-02-27)
 
 
