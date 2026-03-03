@@ -19,7 +19,7 @@ const DEFAULT_PAGE_SIZE = 25;
 const MAX_RETRIES = 3;
 const MAX_PAGES = 100;
 const INITIAL_RETRY_DELAY = 1000;
-const RETRYABLE_STATUS_CODES = [429, 502, 503, 504];
+const RETRYABLE_STATUS_CODES = new Set([429, 502, 503, 504]);
 
 export class OutlineClient {
   private baseUrl: string;
@@ -49,11 +49,13 @@ export class OutlineClient {
       });
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
-      throw new Error(`Network error connecting to Outline API: ${message}`);
+      throw new Error(`Network error connecting to Outline API: ${message}`, {
+        cause: error,
+      });
     }
 
     // Handle retryable errors
-    if (RETRYABLE_STATUS_CODES.includes(response.status) && retries > 0) {
+    if (RETRYABLE_STATUS_CODES.has(response.status) && retries > 0) {
       const retryAfter = response.headers.get('Retry-After');
       const parsedRetryAfter = retryAfter ? parseInt(retryAfter, 10) : NaN;
       const delay = !isNaN(parsedRetryAfter)
@@ -86,7 +88,9 @@ export class OutlineClient {
       data = (await response.json()) as OutlineApiResponse<T> | OutlineApiError;
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
-      throw new Error(`Invalid JSON response from Outline API: ${message}`);
+      throw new Error(`Invalid JSON response from Outline API: ${message}`, {
+        cause: error,
+      });
     }
 
     if (!data.ok) {
@@ -116,6 +120,7 @@ export class OutlineClient {
     while (hasMore && pageCount < MAX_PAGES) {
       pageCount++;
 
+      // eslint-disable-next-line no-await-in-loop -- sequential pagination is intentional
       const response = await this.request<T[] | Record<string, T[]>>(endpoint, {
         ...params,
         limit: DEFAULT_PAGE_SIZE,
