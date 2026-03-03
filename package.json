@@ -43,7 +43,7 @@
     "check": "pnpm run lint && pnpm run format:check && pnpm run typecheck && pnpm run test",
     "release": "semantic-release",
     "prepare": "husky",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "pnpm run build"
   },
   "keywords": [
     "mcp",

@@ -28,14 +28,19 @@ export function loadConfig(configPath?: string): OutlineConfig {
     } catch (error: unknown) {
       const nodeError = error as NodeJS.ErrnoException;
       if (nodeError.code === 'ENOENT') {
-        throw new Error(`Config file not found: ${configPath}`);
+        throw new Error(`Config file not found: ${configPath}`, {
+          cause: error,
+        });
       } else if (error instanceof SyntaxError) {
         throw new Error(
-          `Invalid JSON in config file ${configPath}: ${error.message}`
+          `Invalid JSON in config file ${configPath}: ${error.message}`,
+          { cause: error }
         );
       }
       const message = error instanceof Error ? error.message : String(error);
-      throw new Error(`Failed to read config file ${configPath}: ${message}`);
+      throw new Error(`Failed to read config file ${configPath}: ${message}`, {
+        cause: error,
+      });
     }
   }
 
