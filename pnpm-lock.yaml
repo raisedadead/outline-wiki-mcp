@@ -17,7 +17,7 @@ importers:
     devDependencies:
       '@commitlint/cli':
         specifier: ^19.0.0
-        version: 19.8.1(@types/node@22.19.5)(typescript@5.9.3)
+        version: 19.8.1(@types/node@22.19.13)(typescript@5.9.3)
       '@commitlint/config-conventional':
         specifier: ^19.0.0
         version: 19.8.1
@@ -32,7 +32,7 @@ importers:
         version: 10.0.1(semantic-release@25.0.2(typescript@5.9.3))
       '@types/node':
         specifier: ^22.0.0
-        version: 22.19.5
+        version: 22.19.13
       husky:
         specifier: ^9.0.0
         version: 9.1.7
@@ -53,7 +53,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.0
-        version: 2.1.9(@types/node@22.19.5)
+        version: 2.1.9(@types/node@22.19.13)
 
 packages:
 
@@ -791,8 +791,8 @@ packages:
   '@types/estree@1.0.8':
     resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}
 
-  '@types/node@22.19.5':
-    resolution: {integrity: sha512-HfF8+mYcHPcPypui3w3mvzuIErlNOh2OAG+BCeBZCEwyiD5ls2SiCwEyT47OELtf7M3nHxBdu0FsmzdKxkN52Q==}
+  '@types/node@22.19.13':
+    resolution: {integrity: sha512-akNQMv0wW5uyRpD2v2IEyRSZiR+BeGuoB6L310EgGObO44HSMNT8z1xzio28V8qOrgYaopIDNA18YgdXd+qTiw==}
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
@@ -1365,6 +1365,7 @@ packages:
   git-raw-commits@4.0.0:
     resolution: {integrity: sha512-ICsMM1Wk8xSGMowkOmPrzo2Fgmfo4bMHLNX6ytHjajRJUqvHOw/TFapQ+QG75c3X/tTDDhOSRPGC52dDbNM8FQ==}
     engines: {node: '>=16'}
+    deprecated: This package is no longer maintained. For the JavaScript API, please use @conventional-changelog/git-client instead.
     hasBin: true
 
   global-directory@4.0.1:
@@ -2666,11 +2667,11 @@ snapshots:
   '@colors/colors@1.5.0':
     optional: true
 
-  '@commitlint/cli@19.8.1(@types/node@22.19.5)(typescript@5.9.3)':
+  '@commitlint/cli@19.8.1(@types/node@22.19.13)(typescript@5.9.3)':
     dependencies:
       '@commitlint/format': 19.8.1
       '@commitlint/lint': 19.8.1
-      '@commitlint/load': 19.8.1(@types/node@22.19.5)(typescript@5.9.3)
+      '@commitlint/load': 19.8.1(@types/node@22.19.13)(typescript@5.9.3)
       '@commitlint/read': 19.8.1
       '@commitlint/types': 19.8.1
       tinyexec: 1.0.2
@@ -2717,7 +2718,7 @@ snapshots:
       '@commitlint/rules': 19.8.1
       '@commitlint/types': 19.8.1
 
-  '@commitlint/load@19.8.1(@types/node@22.19.5)(typescript@5.9.3)':
+  '@commitlint/load@19.8.1(@types/node@22.19.13)(typescript@5.9.3)':
     dependencies:
       '@commitlint/config-validator': 19.8.1
       '@commitlint/execute-rule': 19.8.1
@@ -2725,7 +2726,7 @@ snapshots:
       '@commitlint/types': 19.8.1
       chalk: 5.6.2
       cosmiconfig: 9.0.0(typescript@5.9.3)
-      cosmiconfig-typescript-loader: 6.2.0(@types/node@22.19.5)(cosmiconfig@9.0.0(typescript@5.9.3))(typescript@5.9.3)
+      cosmiconfig-typescript-loader: 6.2.0(@types/node@22.19.13)(cosmiconfig@9.0.0(typescript@5.9.3))(typescript@5.9.3)
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       lodash.uniq: 4.5.0
@@ -3253,11 +3254,11 @@ snapshots:
 
   '@types/conventional-commits-parser@5.0.2':
     dependencies:
-      '@types/node': 22.19.5
+      '@types/node': 22.19.13
 
   '@types/estree@1.0.8': {}
 
-  '@types/node@22.19.5':
+  '@types/node@22.19.13':
     dependencies:
       undici-types: 6.21.0
 
@@ -3270,13 +3271,13 @@ snapshots:
       chai: 5.3.3
       tinyrainbow: 1.2.0
 
-  '@vitest/mocker@2.1.9(vite@5.4.21(@types/node@22.19.5))':
+  '@vitest/mocker@2.1.9(vite@5.4.21(@types/node@22.19.13))':
     dependencies:
       '@vitest/spy': 2.1.9
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: 5.4.21(@types/node@22.19.5)
+      vite: 5.4.21(@types/node@22.19.13)
 
   '@vitest/pretty-format@2.1.9':
     dependencies:
@@ -3550,9 +3551,9 @@ snapshots:
       object-assign: 4.1.1
       vary: 1.1.2
 
-  cosmiconfig-typescript-loader@6.2.0(@types/node@22.19.5)(cosmiconfig@9.0.0(typescript@5.9.3))(typescript@5.9.3):
+  cosmiconfig-typescript-loader@6.2.0(@types/node@22.19.13)(cosmiconfig@9.0.0(typescript@5.9.3))(typescript@5.9.3):
     dependencies:
-      '@types/node': 22.19.5
+      '@types/node': 22.19.13
       cosmiconfig: 9.0.0(typescript@5.9.3)
       jiti: 2.6.1
       typescript: 5.9.3
@@ -4916,13 +4917,13 @@ snapshots:
 
   vary@1.1.2: {}
 
-  vite-node@2.1.9(@types/node@22.19.5):
+  vite-node@2.1.9(@types/node@22.19.13):
     dependencies:
       cac: 6.7.14
       debug: 4.4.3
       es-module-lexer: 1.7.0
       pathe: 1.1.2
-      vite: 5.4.21(@types/node@22.19.5)
+      vite: 5.4.21(@types/node@22.19.13)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -4934,19 +4935,19 @@ snapshots:
       - supports-color
       - terser
 
-  vite@5.4.21(@types/node@22.19.5):
+  vite@5.4.21(@types/node@22.19.13):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.5.6
       rollup: 4.55.1
     optionalDependencies:
-      '@types/node': 22.19.5
+      '@types/node': 22.19.13
       fsevents: 2.3.3
 
-  vitest@2.1.9(@types/node@22.19.5):
+  vitest@2.1.9(@types/node@22.19.13):
     dependencies:
       '@vitest/expect': 2.1.9
-      '@vitest/mocker': 2.1.9(vite@5.4.21(@types/node@22.19.5))
+      '@vitest/mocker': 2.1.9(vite@5.4.21(@types/node@22.19.13))
       '@vitest/pretty-format': 2.1.9
       '@vitest/runner': 2.1.9
       '@vitest/snapshot': 2.1.9
@@ -4962,11 +4963,11 @@ snapshots:
       tinyexec: 0.3.2
       tinypool: 1.1.1
       tinyrainbow: 1.2.0
-      vite: 5.4.21(@types/node@22.19.5)
-      vite-node: 2.1.9(@types/node@22.19.5)
+      vite: 5.4.21(@types/node@22.19.13)
+      vite-node: 2.1.9(@types/node@22.19.13)
       why-is-node-running: 2.3.0
     optionalDependencies:
-      '@types/node': 22.19.5
+      '@types/node': 22.19.13
     transitivePeerDependencies:
       - less
       - lightningcss
