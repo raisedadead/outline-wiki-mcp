@@ -1,3 +1,10 @@
+## [1.2.4](https://github.com/raisedadead/outline-wiki-mcp/compare/v1.2.3...v1.2.4) (2026-03-11)
+
+
+### Bug Fixes
+
+* resolve export crash and return full document content ([3331599](https://github.com/raisedadead/outline-wiki-mcp/commit/3331599b7a8eaa4ae1a5713d5ce5397c7d8907f6))
+
 ## [1.2.3](https://github.com/raisedadead/outline-wiki-mcp/compare/v1.2.2...v1.2.3) (2026-03-03)
 
 
