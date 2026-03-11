@@ -35,12 +35,12 @@
     "start:http": "node dist/index.js --transport http",
     "test": "vitest run",
     "test:watch": "vitest --watch",
-    "test:run": "vitest run",
     "lint": "oxlint src/ tests/",
     "format": "oxfmt --write src/ tests/",
     "format:check": "oxfmt --check src/ tests/",
     "typecheck": "tsc --noEmit",
     "check": "pnpm run lint && pnpm run format:check && pnpm run typecheck && pnpm run test",
+    "deploy": "docker compose up -d --build",
     "release": "semantic-release",
     "prepare": "husky",
     "prepublishOnly": "pnpm run build"
