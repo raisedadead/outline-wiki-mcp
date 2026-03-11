@@ -543,10 +543,10 @@ describe('registerTools', () => {
       expect(parsed.id).toBe('doc-1');
       expect(parsed.wordCount).toBe(5);
       expect(parsed.charCount).toBe(26);
-      expect(parsed.preview).toBe('# Title\n\nSome content here');
+      expect(parsed.content).toBe('# Title\n\nSome content here');
     });
 
-    it('should truncate long export previews', async () => {
+    it('should return full content without truncation', async () => {
       const longMarkdown = 'word '.repeat(200);
       vi.mocked(client.exportDocument).mockResolvedValue(longMarkdown);
 
@@ -554,7 +554,8 @@ describe('registerTools', () => {
       const result = await handler({ id: 'doc-1' });
       const parsed = parseResult(result);
 
-      expect(parsed.preview.length).toBeLessThanOrEqual(501);
+      expect(parsed.content).toBe(longMarkdown);
+      expect(parsed.content.length).toBe(1000);
     });
   });
 

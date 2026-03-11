@@ -246,11 +246,11 @@ describe('registerResources', () => {
       expect(text).toContain('**ID:** doc-1');
       expect(text).toContain('**Updated:** 2024-01-01T00:00:00Z');
       expect(text).toContain('**Words:** 4');
-      expect(text).toContain('## Preview');
+      expect(text).toContain('---');
       expect(text).toContain('Hello world content here');
     });
 
-    it('should truncate long document previews to 500 chars', async () => {
+    it('should return full document content without truncation', async () => {
       const longText = 'a'.repeat(600);
       const mockDoc = {
         id: 'doc-1',
@@ -266,11 +266,8 @@ describe('registerResources', () => {
       });
 
       const text = result.contents[0].text;
-      // The preview section should be truncated
-      const previewStart =
-        text.indexOf('## Preview\n\n') + '## Preview\n\n'.length;
-      const preview = text.slice(previewStart);
-      expect(preview.length).toBeLessThanOrEqual(501);
+      expect(text).toContain(longText);
+      expect(text).not.toContain('…');
     });
 
     it('should throw error for missing documentId', async () => {

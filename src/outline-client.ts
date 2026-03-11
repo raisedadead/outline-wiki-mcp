@@ -12,7 +12,6 @@ import type {
   DocumentMoveParams,
   CollectionCreateParams,
   CollectionUpdateParams,
-  DocumentExport,
 } from './types.js';
 
 const DEFAULT_PAGE_SIZE = 25;
@@ -250,10 +249,10 @@ export class OutlineClient {
   }
 
   async exportDocument(id: string): Promise<string> {
-    const response = await this.request<DocumentExport>('documents.export', {
+    const response = await this.request<string>('documents.export', {
       id,
     });
-    return response.data.data;
+    return response.data;
   }
 
   // Additional collection methods

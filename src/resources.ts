@@ -4,13 +4,6 @@ import {
 } from '@modelcontextprotocol/sdk/server/mcp.js';
 import type { OutlineClient } from './outline-client.js';
 
-const PREVIEW_LENGTH = 500;
-
-function truncate(text: string, maxLength: number): string {
-  if (text.length <= maxLength) return text;
-  return text.slice(0, maxLength) + '…';
-}
-
 function extractStringParam(
   params: Record<string, string | string[]>,
   key: string
@@ -51,7 +44,7 @@ export function registerResources(
           {
             uri: uri.href,
             mimeType: 'application/json',
-            text: JSON.stringify(formatted, null, 2),
+            text: JSON.stringify(formatted),
           },
         ],
       };
@@ -103,7 +96,7 @@ export function registerResources(
           {
             uri: uri.href,
             mimeType: 'application/json',
-            text: JSON.stringify(formatted, null, 2),
+            text: JSON.stringify(formatted),
           },
         ],
       };
@@ -128,7 +121,8 @@ export function registerResources(
     }),
     {
       title: 'Document Content',
-      description: 'Full content of a specific document in markdown',
+      description:
+        'Full document content in markdown, including metadata header',
       mimeType: 'text/markdown',
     },
     async (uri: URL, params: Record<string, string | string[]>) => {
@@ -142,9 +136,9 @@ export function registerResources(
         `**Updated:** ${doc.updatedAt}`,
         `**Words:** ${doc.text.split(/\s+/).filter(Boolean).length}`,
         '',
-        '## Preview',
+        '---',
         '',
-        truncate(doc.text, PREVIEW_LENGTH),
+        doc.text,
       ].join('\n');
 
       return {

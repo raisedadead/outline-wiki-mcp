@@ -48,7 +48,7 @@ export function registerTools(server: McpServer, client: OutlineClient): void {
         content: [
           {
             type: 'text' as const,
-            text: JSON.stringify(formatted, null, 2),
+            text: JSON.stringify(formatted),
           },
         ],
       };
@@ -81,7 +81,7 @@ export function registerTools(server: McpServer, client: OutlineClient): void {
         content: [
           {
             type: 'text' as const,
-            text: JSON.stringify(result, null, 2),
+            text: JSON.stringify(result),
           },
         ],
       };
@@ -106,7 +106,7 @@ export function registerTools(server: McpServer, client: OutlineClient): void {
         content: [
           {
             type: 'text' as const,
-            text: JSON.stringify(formatted, null, 2),
+            text: JSON.stringify(formatted),
           },
         ],
       };
@@ -142,7 +142,7 @@ export function registerTools(server: McpServer, client: OutlineClient): void {
         content: [
           {
             type: 'text' as const,
-            text: JSON.stringify(formatted, null, 2),
+            text: JSON.stringify(formatted),
           },
         ],
       };
@@ -179,17 +179,13 @@ export function registerTools(server: McpServer, client: OutlineClient): void {
         content: [
           {
             type: 'text' as const,
-            text: JSON.stringify(
-              {
-                id: doc.id,
-                urlId: doc.urlId,
-                title: doc.title,
-                collectionId: doc.collectionId,
-                createdAt: doc.createdAt,
-              },
-              null,
-              2
-            ),
+            text: JSON.stringify({
+              id: doc.id,
+              urlId: doc.urlId,
+              title: doc.title,
+              collectionId: doc.collectionId,
+              createdAt: doc.createdAt,
+            }),
           },
         ],
       };
@@ -223,15 +219,11 @@ export function registerTools(server: McpServer, client: OutlineClient): void {
         content: [
           {
             type: 'text' as const,
-            text: JSON.stringify(
-              {
-                id: doc.id,
-                title: doc.title,
-                updatedAt: doc.updatedAt,
-              },
-              null,
-              2
-            ),
+            text: JSON.stringify({
+              id: doc.id,
+              title: doc.title,
+              updatedAt: doc.updatedAt,
+            }),
           },
         ],
       };
@@ -262,18 +254,14 @@ export function registerTools(server: McpServer, client: OutlineClient): void {
         content: [
           {
             type: 'text' as const,
-            text: JSON.stringify(
-              {
-                moved: docs.length,
-                documents: docs.map(d => ({
-                  id: d.id,
-                  title: d.title,
-                  collectionId: d.collectionId,
-                })),
-              },
-              null,
-              2
-            ),
+            text: JSON.stringify({
+              moved: docs.length,
+              documents: docs.map(d => ({
+                id: d.id,
+                title: d.title,
+                collectionId: d.collectionId,
+              })),
+            }),
           },
         ],
       };
@@ -298,11 +286,11 @@ export function registerTools(server: McpServer, client: OutlineClient): void {
         content: [
           {
             type: 'text' as const,
-            text: JSON.stringify(
-              { deleted: true, id, permanent: permanent ?? false },
-              null,
-              2
-            ),
+            text: JSON.stringify({
+              deleted: true,
+              id,
+              permanent: permanent ?? false,
+            }),
           },
         ],
       };
@@ -323,16 +311,12 @@ export function registerTools(server: McpServer, client: OutlineClient): void {
         content: [
           {
             type: 'text' as const,
-            text: JSON.stringify(
-              {
-                archived: true,
-                id: doc.id,
-                title: doc.title,
-                archivedAt: doc.archivedAt,
-              },
-              null,
-              2
-            ),
+            text: JSON.stringify({
+              archived: true,
+              id: doc.id,
+              title: doc.title,
+              archivedAt: doc.archivedAt,
+            }),
           },
         ],
       };
@@ -353,11 +337,11 @@ export function registerTools(server: McpServer, client: OutlineClient): void {
         content: [
           {
             type: 'text' as const,
-            text: JSON.stringify(
-              { restored: true, id: doc.id, title: doc.title },
-              null,
-              2
-            ),
+            text: JSON.stringify({
+              restored: true,
+              id: doc.id,
+              title: doc.title,
+            }),
           },
         ],
       };
@@ -383,7 +367,7 @@ export function registerTools(server: McpServer, client: OutlineClient): void {
         content: [
           {
             type: 'text' as const,
-            text: JSON.stringify(formatted, null, 2),
+            text: JSON.stringify(formatted),
           },
         ],
       };
@@ -393,7 +377,7 @@ export function registerTools(server: McpServer, client: OutlineClient): void {
   // outline_export_document - Export document as markdown
   server.tool(
     'outline_export_document',
-    'Export a document as clean markdown. Returns a content preview with stats. Full content is available via the outline://documents/{id} resource.',
+    'Export a document as clean markdown. Returns the full document content with stats.',
     {
       id: z.string().describe('Document ID to export'),
     },
@@ -404,14 +388,14 @@ export function registerTools(server: McpServer, client: OutlineClient): void {
         id,
         wordCount: wordCount(markdown),
         charCount: markdown.length,
-        preview: truncate(markdown, PREVIEW_LENGTH),
+        content: markdown,
       };
 
       return {
         content: [
           {
             type: 'text' as const,
-            text: JSON.stringify(result, null, 2),
+            text: JSON.stringify(result),
           },
         ],
       };
@@ -432,17 +416,13 @@ export function registerTools(server: McpServer, client: OutlineClient): void {
         content: [
           {
             type: 'text' as const,
-            text: JSON.stringify(
-              {
-                id: collection.id,
-                name: collection.name,
-                description: collection.description,
-                color: collection.color,
-                permission: collection.permission,
-              },
-              null,
-              2
-            ),
+            text: JSON.stringify({
+              id: collection.id,
+              name: collection.name,
+              description: collection.description,
+              color: collection.color,
+              permission: collection.permission,
+            }),
           },
         ],
       };
@@ -474,16 +454,12 @@ export function registerTools(server: McpServer, client: OutlineClient): void {
         content: [
           {
             type: 'text' as const,
-            text: JSON.stringify(
-              {
-                id: collection.id,
-                name: collection.name,
-                description: collection.description,
-                color: collection.color,
-              },
-              null,
-              2
-            ),
+            text: JSON.stringify({
+              id: collection.id,
+              name: collection.name,
+              description: collection.description,
+              color: collection.color,
+            }),
           },
         ],
       };
@@ -517,16 +493,12 @@ export function registerTools(server: McpServer, client: OutlineClient): void {
         content: [
           {
             type: 'text' as const,
-            text: JSON.stringify(
-              {
-                id: collection.id,
-                name: collection.name,
-                description: collection.description,
-                color: collection.color,
-              },
-              null,
-              2
-            ),
+            text: JSON.stringify({
+              id: collection.id,
+              name: collection.name,
+              description: collection.description,
+              color: collection.color,
+            }),
           },
         ],
       };
@@ -547,7 +519,7 @@ export function registerTools(server: McpServer, client: OutlineClient): void {
         content: [
           {
             type: 'text' as const,
-            text: JSON.stringify({ deleted: true, id }, null, 2),
+            text: JSON.stringify({ deleted: true, id }),
           },
         ],
       };

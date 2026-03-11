@@ -221,7 +221,7 @@ describe('OutlineClient', () => {
     it('should export a document as markdown', async () => {
       mockFetchResponse({
         ok: true,
-        data: { data: '# Document Content' },
+        data: '# Document Content',
       });
 
       const markdown = await client.exportDocument('doc-1');

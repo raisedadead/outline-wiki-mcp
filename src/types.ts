@@ -137,7 +137,3 @@ export interface CollectionUpdateParams {
   color?: string;
   permission?: 'read' | 'read_write';
 }
-
-export interface DocumentExport {
-  data: string;
-}
